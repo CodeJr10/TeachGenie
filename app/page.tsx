@@ -8,7 +8,7 @@ import { recentSessions } from "@/constants";
 const Page = () => {
   return (
     <main>
-      <h1 className="text-2xl underline">Popular Companions</h1>
+      <h1 className="text-2xl">Popular Companions</h1>
 
       <section className="home-section">
         <CompanionCard
@@ -21,19 +21,19 @@ const Page = () => {
         />
         <CompanionCard
           id="456"
-          name="Neura the Brainy Explorer"
-          topic="Neural Network of Brain"
+          name="Countsy the Math Wizard"
+          topic="Derivatives and Integrals"
           subject="science"
           duration={45}
-          color="#ffda6e"
+          color="#e5d0ff"
         />
         <CompanionCard
           id="789"
-          name="Neura the Brainy Explorer"
-          topic="Neural Network of Brain"
+          name="Verba the Vocabulary Virtuoso"
+          topic="Advanced English Vocabulary"
           subject="science"
           duration={45}
-          color="#ffda6e"
+          color="#BDE7FF"
         />
       </section>
 
