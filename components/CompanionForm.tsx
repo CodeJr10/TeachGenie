@@ -1,10 +1,5 @@
 "use client";
 
-import { minLength } from "zod/v4";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -13,16 +8,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { minLength } from "zod/v4";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const formSchema = z.object({
-  name: z.string().min(minLength: 1, {message: "Companion name is required"}),
-  subject: z.string().min(minLength: 1, {message: "Subject is required"}),
-  topic: z.string().min(minLength: 1, {message: "Topic is required"}),
-  voice: z.string().min(minLength: 1, {message: "Voice is required"}),
-  style: z.string().min(minLength: 1, {message: "Style is required"}),
-  duration: z.coerce.number().min(value: 1, {message: "Duration is required"}),
+  name: z.string().min(1, { message: "Companion name is required" }),
+  subject: z.string().min(1, { message: "Subject is required" }),
+  topic: z.string().min(1, { message: "Topic is required" }),
+  voice: z.string().min(1, { message: "Voice is required" }),
+  style: z.string().min(1, { message: "Style is required" }),
+  duration: z.coerce.number().min(1, { message: "Duration is required" }),
 });
 
 const CompanionForm = () => {
@@ -38,12 +39,11 @@ const CompanionForm = () => {
     },
   });
 
-  
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
-  }
+  };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -66,7 +66,7 @@ const CompanionForm = () => {
         <Button type="submit">Submit</Button>
       </form>
     </Form>
-  )
+  );
 };
 
 export default CompanionForm;
