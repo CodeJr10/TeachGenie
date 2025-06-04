@@ -17,7 +17,7 @@ const Navbar = () => {
         <NavItems />
         <SignedOut>
           <SignInButton>
-            <button className="btn btn-signin">Sign In</button>
+            <button className="btn-signin">Sign In</button>
           </SignInButton>
         </SignedOut>
         <SignedIn>
