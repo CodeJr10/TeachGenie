@@ -62,13 +62,7 @@ Create an LMS SaaS app from scratch featuring user authentication, subscriptions
 
 👉 **Database Integration**: Uses Supabase for real-time data handling and storage needs.
 
-👉 **Modern UI/UX**: Clean, responsive design built with Tailwind CSS and shadcn/ui for a sleek user experience.
-
-👉 **Scalable Tech Stack**: Built with Next.js for a fast, production-ready web application that scales seamlessly.
-
 👉 **Search Functionality**: Find tutors quickly with robust filters and search bar.
-
-and many more, including code architecture and reusability.
 
 ## <a name="quick-start">🤸 Quick Start</a>
 
