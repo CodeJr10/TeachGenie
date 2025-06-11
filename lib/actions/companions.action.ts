@@ -61,5 +61,5 @@ export const getCompanion = async (id: string) => {
     return console.log(error);
   }
 
-  return [0];
+  return data[0];
 };
