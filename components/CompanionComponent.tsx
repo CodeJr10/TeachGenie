@@ -1,10 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import Lottie, { LottieRefCurrentProps } from "lottie-react";
+import React, { useEffect, useRef, useState } from "react";
 import { cn, getSubjectColor } from "@/lib/utils";
 
+import Image from "next/image";
+import { ca } from "zod/v4/locales";
 import { on } from "events";
 import { set } from "zod/v4";
+import soundwaves from "@/constants/soundwaves.json";
 import { vapi } from "@/lib/vapi.sdk";
 
 enum CallStatus {
@@ -25,6 +29,14 @@ const CompanionComponent = ({
 }: CompanionComponentProps) => {
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
+
+  useEffect(() => {
+    if (lottieRef) {
+      if (isSpeaking) lottieRef.current?.play();
+      else lottieRef.current?.stop();
+    }
+  });
 
   useEffect(() => {
     const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
@@ -59,10 +71,42 @@ const CompanionComponent = ({
             style={{ backgroundColor: getSubjectColor(subject) }}
           >
             <div
-              className={cn(..."absolute transition-opacity duration-1000")}
-            ></div>
+              className={cn(
+                ..."absolute transition-opacity duration-1000",
+                callStatus === CallStatus.FINISHED ||
+                  callStatus === CallStatus.INACTIVE
+                  ? "opacity-100"
+                  : "opacity-0",
+                callStatus === CallStatus.CONNECTING &&
+                  "opacity-100 animate-pulse"
+              )}
+            >
+              <Image
+                src={`/icons/${subject}.svg`}
+                alt={subject}
+                width={150}
+                height={150}
+                className="max-sm:w-fit"
+              />
+            </div>
+            <div
+              className={cn(
+                "absolute transition-opacity duration-1000",
+                callStatus === CallStatus.ACTIVE ? "opacity-100" : "opacity-0"
+              )}
+            >
+              <Lottie
+                lottieRef={lottieRef}
+                animationData={soundwaves}
+                autoPlay={false}
+                className="companion-lottie"
+              />
+            </div>
           </div>
+          <p className="font-bold text-2xl">{name}</p>
         </div>
+
+        <div className="user-section"></div>
       </section>
     </section>
   );
