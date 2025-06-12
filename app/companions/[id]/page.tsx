@@ -7,10 +7,13 @@ import { redirect } from "next/navigation";
 interface CompanionSessionPageProps {
   params: Promise<{ id: string }>;
 }
+
 const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
   const { id } = await params;
-  const { name, subject, topic, duration } = await getCompanion(id);
+  const companion = await getCompanion(id);
   const user = await currentUser();
+
+  const { name, subject, topic, duration } = companion;
 
   if (!user) redirect("/sign-in");
   if (!name) redirect("/companions");
@@ -21,14 +24,16 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
         <div className="flex items-center gap-2">
           <div
             className="size-[72px] flex items-center justify-center rounded-lg max-md:hidden"
-            style={{ background: getSubjectColor(subject) }}
-          />
-          <Image
-            src={`/icons/${subject}.svg`}
-            alt={subject}
-            width={35}
-            height={35}
-          />
+            style={{ backgroundColor: getSubjectColor(subject) }}
+          >
+            <Image
+              src={`/icons/${subject}.svg`}
+              alt={subject}
+              width={35}
+              height={35}
+            />
+          </div>
+
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <p className="font-bold text-2xl">{name}</p>
