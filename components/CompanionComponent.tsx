@@ -2,12 +2,9 @@
 
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import React, { useEffect, useRef, useState } from "react";
-import { cn, getSubjectColor } from "@/lib/utils";
+import { cn, configureAssistant, getSubjectColor } from "@/lib/utils";
 
 import Image from "next/image";
-import { ca } from "zod/v4/locales";
-import { on } from "events";
-import { set } from "zod/v4";
 import soundwaves from "@/constants/soundwaves.json";
 import { vapi } from "@/lib/vapi.sdk";
 
@@ -34,8 +31,11 @@ const CompanionComponent = ({
   const [isMuted, setIsMuted] = useState(false);
   useEffect(() => {
     if (lottieRef) {
-      if (isSpeaking) lottieRef.current?.play();
-      else lottieRef.current?.stop();
+      if (isSpeaking) {
+        lottieRef.current?.play();
+      } else {
+        lottieRef.current?.stop();
+      }
     }
   });
 
@@ -78,7 +78,7 @@ const CompanionComponent = ({
       clientMessages: ["transcript"],
       serverMessages: [],
     };
-    // @ts-expect-error
+    // @ts-expect-error: configureAssistant may not match expected type, but is required for vapi integration
     vapi.start(configureAssistant(voice, style), assistantOverrides);
   };
 
@@ -140,7 +140,7 @@ const CompanionComponent = ({
           </div>
           <button className="btn-mic" onClick={toggleMicrophone}>
             <Image
-              src={isMuted ? "/icons/mic-off.svg" : "icons/mic-on.svg"}
+              src={isMuted ? "/icons/mic-off.svg" : "/icons/mic-on.svg"}
               alt="mic"
               width={36}
               height={36}
