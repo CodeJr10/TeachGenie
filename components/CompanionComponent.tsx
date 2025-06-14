@@ -82,7 +82,10 @@ const CompanionComponent = ({
     vapi.start(configureAssistant(voice, style), assistantOverrides);
   };
 
-  const handleDisconnect = () => {};
+  const handleDisconnect = () => {
+    setCallStatus(CallStatus.FINISHED);
+    vapi.stop();
+  };
   return (
     <section className="flex flex-col h-[70vh]">
       <section className="flex gap-8 max-sm:flex-col">
