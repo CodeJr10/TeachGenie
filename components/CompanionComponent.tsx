@@ -69,6 +69,20 @@ const CompanionComponent = ({
     vapi.setMuted(!isMuted);
     setIsMuted(!isMuted);
   };
+
+  const handleCall = async () => {
+    setCallStatus(CallStatus.CONNECTING);
+
+    const assistantOverrides = {
+      variableValues: { subject, topic, style },
+      clientMessages: ["transcript"],
+      serverMessages: [],
+    };
+    // @ts-expect-error
+    vapi.start(configureAssistant(voice, style), assistantOverrides);
+  };
+
+  const handleDisconnect = () => {};
   return (
     <section className="flex flex-col h-[70vh]">
       <section className="flex gap-8 max-sm:flex-col">
@@ -141,6 +155,9 @@ const CompanionComponent = ({
               callStatus === CallStatus.ACTIVE ? "bg-red-700" : "bg-primary",
               callStatus === CallStatus.CONNECTING && "animate-pulse"
             )}
+            onClick={
+              callStatus === CallStatus.ACTIVE ? handleDisconnect : handleCall
+            }
           >
             {callStatus === CallStatus.ACTIVE
               ? "End Session"
@@ -149,6 +166,11 @@ const CompanionComponent = ({
               : "Start Session"}
           </button>
         </div>
+      </section>
+
+      <section className="transcript">
+        <div className="transcript-message no-scrollbar">MESSAGes</div>
+        <div className="transcript-fade" />
       </section>
     </section>
   );
